@@ -69,8 +69,8 @@ exports.deleteTransaction = asyncHandler(async (req, res, next) => {
 exports.approvePayment = asyncHandler(async (req, res, next) => {
   console.log(`transaction ID: ${req.params.txId}`);
   console.log("________________________");
-  console.log(res.body);
-  const status = res.body.status;
+  console.log(req.body);
+  const status = req.body.status;
 
   console.log("________________________");
 
