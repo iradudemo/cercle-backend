@@ -62,13 +62,28 @@ exports.deleteTransaction = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     success: true,
     data: {
-      msg: `transaction with id: ${req.params.id} has already deleted`,
+      msg: `transaction with id: ${req.params.id} has successfully deleted`,
     },
   });
 });
 exports.approvePayment = asyncHandler(async (req, res, next) => {
-  console.log(req.params.txId);
-  console.log(res);
+  console.log(`transaction ID: ${req.params.txId}`);
+  console.log("________________________");
+  console.log(res.body);
+  const status = res.body.status;
+
+  console.log("________________________");
+
+  console.log(`Status ${status}`);
+  if (status !== "SUCCESS") {
+    return next(
+      new ErrorResponse(
+        `transaction with id: ${req.params.txid} had been failed`,
+        200
+      )
+    );
+  }
+
   const transaction = await Transaction.findOneAndUpdate(
     {
       transactionId: req.params.txId,
@@ -78,12 +93,15 @@ exports.approvePayment = asyncHandler(async (req, res, next) => {
       new: true,
     }
   );
-
   if (!transaction) {
     return next(
-      new ErrorResponse(`transaction with id: ${req.params.id} not found`, 404)
+      new ErrorResponse(
+        `transaction with id: ${req.params.txid} not found`,
+        404
+      )
     );
   }
+
   res.status(200).json({
     success: true,
     data: {
