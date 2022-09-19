@@ -66,3 +66,28 @@ exports.deleteTransaction = asyncHandler(async (req, res, next) => {
     },
   });
 });
+exports.approvePayment = asyncHandler(async (req, res, next) => {
+  console.log(req.params.txId);
+  const transaction = await Transaction.findOneAndUpdate(
+    {
+      transactionId: req.params.txId,
+    },
+    { transactionStatus: "SUCCESS" },
+    {
+      new: true,
+    }
+  );
+
+  if (!transaction) {
+    return next(
+      new ErrorResponse(`transaction with id: ${req.params.id} not found`, 404)
+    );
+  }
+  res.status(200).json({
+    success: true,
+    data: {
+      msg: `transaction with id: ${req.params.id} has already updated`,
+      updated_data: transaction,
+    },
+  });
+});

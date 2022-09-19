@@ -5,6 +5,7 @@ const {
   getSingleTransaction,
   updateTransaction,
   deleteTransaction,
+  approvePayment,
 } = require("../controller/transaction");
 const { protect, authorize } = require("../middleware/auth");
 
@@ -16,5 +17,6 @@ router
   .get(getSingleTransaction)
   .put(updateTransaction)
   .delete(deleteTransaction);
+router.route("/payment/:txId").post(approvePayment);
 
 module.exports = router;
