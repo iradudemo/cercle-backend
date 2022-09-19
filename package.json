@@ -2,10 +2,10 @@
   "name": "sportmanagemnt",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production node server",
-    "dev": "nodemon server"
+    "start": "NODE_ENV=production node index",
+    "dev": "nodemon index"
   },
   "author": "C&J",
   "license": "ISC",
