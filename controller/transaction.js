@@ -83,23 +83,42 @@ exports.approvePayment = asyncHandler(async (req, res, next) => {
       )
     );
   }
-
-  const transaction = await Transaction.findOneAndUpdate(
-    {
-      transactionId: req.params.txId,
-    },
-    { transactionStatus: "SUCCESS" },
-    {
-      new: true,
-    }
-  );
-  if (!transaction) {
-    return next(
-      new ErrorResponse(
-        `transaction with id: ${req.params.txid} not found`,
-        404
-      )
+  if (status === "SUCCESS") {
+    const transaction = await Transaction.findOneAndUpdate(
+      {
+        transactionId: req.params.txId,
+      },
+      { transactionStatus: status },
+      {
+        new: true,
+      }
     );
+    if (!transaction) {
+      return next(
+        new ErrorResponse(
+          `transaction with id: ${req.params.txid} not found`,
+          404
+        )
+      );
+    }
+  } else {
+    const transaction = await Transaction.findOneAndUpdate(
+      {
+        transactionId: req.params.txId,
+      },
+      { transactionStatus: status },
+      {
+        new: true,
+      }
+    );
+    if (!transaction) {
+      return next(
+        new ErrorResponse(
+          `transaction with id: ${req.params.txid} not found`,
+          404
+        )
+      );
+    }
   }
 
   res.status(200).json({
