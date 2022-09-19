@@ -68,6 +68,7 @@ exports.deleteTransaction = asyncHandler(async (req, res, next) => {
 });
 exports.approvePayment = asyncHandler(async (req, res, next) => {
   console.log(req.params.txId);
+  console.log(JSON.stringify(res.body));
   const transaction = await Transaction.findOneAndUpdate(
     {
       transactionId: req.params.txId,
