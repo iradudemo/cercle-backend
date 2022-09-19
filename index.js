@@ -49,6 +49,7 @@ app.use("/api/reviews", reviews);
 app.use("/api/time", time);
 app.use("/api/booktime", bookTime);
 app.use("/api/uploads", upload);
+app.use("/", require("./routes/index"));
 
 app.use(errorHandler);
 
